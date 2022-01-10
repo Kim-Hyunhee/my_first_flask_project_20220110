@@ -85,6 +85,19 @@ def sign_up(params):
             'code' : 400,
             'message' : '이미 사용중인 이메일입니다.'
         }, 400
+        
+    # 닉네임이 사용중인가? 사용중이라면 : code - 400, message - '이미 사용중인 닉네임입니다.'
+    
+    sql = f"SELECT * FROM users WHERE nickname = '{params['nick']}'"
+    
+    cursor.execute(sql)
+    nick_check_result = cursor.fetchone()
+    
+    if nick_check_result:
+        return {
+            'code' : 400,
+            'message' : '이미 사용중인 닉네임입니다.'
+        }, 400
     
     sql = f"INSERT INTO users (email, password, nickname) VALUES ('{params['email']}', '{params['pw']}', '{params['nick']}');"
     

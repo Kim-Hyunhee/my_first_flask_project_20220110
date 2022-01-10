@@ -69,6 +69,23 @@ def login_test(id, pw):
 # 둘 다 통과 해야만 실제 INSERT INTO -> 결과를 200으로 내려주자 + 가입된 사용자 정보도 내려주자
 
 def sign_up(params):
+    
+    # 이메일이 사용중인지? 검사
+    # params['email']와 같은 이메일이 DB에 있는가? 조회 => SELECT를 날려보자
+    
+    sql = f"SELECT * FROM users WHERE email = '{params['email']}'"
+    
+    cursor.execute(sql)
+    email_check_result = cursor.fetchone()  # 같은 이메일이 하나라도 있는지?
+    
+    if email_check_result:
+        # 이메일 검사 쿼리 결과가 => None이 아닌가? (실체가 있나?)
+        # 있다면 이미 이메일이 사용 중이다. => DB 등록 X
+        return {
+            'code' : 400,
+            'message' : '이미 사용중인 이메일입니다.'
+        }, 400
+    
     sql = f"INSERT INTO users (email, password, nickname) VALUES ('{params['email']}', '{params['pw']}', '{params['nick']}');"
     
     print(f'완성된 쿼리 : {sql}')

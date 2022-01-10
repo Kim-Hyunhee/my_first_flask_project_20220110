@@ -56,7 +56,7 @@ def create_app():
         
     @app.route('/module_test')
     def module_test():
-        return user_test()
+        return user_test()  # 다른 모듈의 함수의 실행 결과를 내보내자 => 로직을 다른 모듈에서만 작성하면 됨
     
     # 이 서버를 사용하도록 결과로 내보내자
     return app

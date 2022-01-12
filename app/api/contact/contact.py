@@ -16,8 +16,17 @@ cursor = db.cursor()
 
 def add_contact_to_db(params):
     
-    sql = f"SELECT* FROM users WHERE user_id= params['user_id']"
-    user_result =
+    sql = f"SELECT * FROM users WHERE id = {params['user_id']};"
+
+    cursor.execute(sql)
+    user_result = cursor.fetchone()
+    
+    if user_result == None:
+        return {
+            'code' :400,
+            'message' :'존재하지 않는 아이디입니다.'            
+        }
+    
     sql = f"INSERT INTO contacts(user_id, name, phone_num, memo) VALUES({params['user_id']}, '{params['name']}', '{params['phone']}', '{params['memo']}')"
     cursor.execute(sql)
     db.commit()

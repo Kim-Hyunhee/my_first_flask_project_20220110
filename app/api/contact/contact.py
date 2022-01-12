@@ -15,6 +15,9 @@ db = connect(
 cursor = db.cursor()
 
 def add_contact_to_db(params):
+    
+    sql = f"SELECT* FROM users WHERE user_id= params['user_id']"
+    user_result =
     sql = f"INSERT INTO contacts(user_id, name, phone_num, memo) VALUES({params['user_id']}, '{params['name']}', '{params['phone']}', '{params['memo']}')"
     cursor.execute(sql)
     db.commit()

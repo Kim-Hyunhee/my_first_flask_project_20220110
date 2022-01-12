@@ -34,3 +34,13 @@ def add_contact_to_db(params):
         'code':200,
         'message':'연락처 등록이 완료되었습니다.'
     }
+    
+def get_all_contacts(params):
+    sql = f"SELECT * FROM contacts WHERE user_id = {params['user_id']};"
+    cursor.execute(sql)
+    contact_result = cursor.fetchall()
+    return {
+        'name' : 
+        
+    }
+    

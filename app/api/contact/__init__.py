@@ -1,1 +1,1 @@
-from .contact import  add_contact_to_db
+from .contact import  add_contact_to_db, get_all_contacts

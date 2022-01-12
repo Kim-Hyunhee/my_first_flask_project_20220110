@@ -7,6 +7,19 @@ class Contacts:
         self.id = data_dict['id']
         self.name = data_dict['name']
         self.phone = data_dict['phone_num']  # DB의 컬럼 : phone_num, 변수 이름 : phone
+        self.email = data_dict['email']  # DB의 컬럼 추가 : 변수 항목 추가
         self.memo = data_dict['memo']
         self.created_at = data_dict['created_at']
         
+    # 내부 데이터 (객체 변수) 이용 => 앱에 전달하기 좋은 모양의 dict로 재가공
+    def get_data_object(self):
+        data = {
+            'id' : self.id,
+            'name' :self.name,
+            'phone_num' :self.phone,
+            'email' :self.email,
+            'memo' :self.memo,
+            'created_at':str(self.created_at)    
+        }
+        
+        return data

@@ -1,6 +1,8 @@
 from pymysql import connect
 from pymysql.cursors import DictCursor
 
+from app.models import Contacts
+
 # 연락처에 관련된 로직을 담당하는 파일
 # db 연결 / cursor 변수
 db = connect(
@@ -101,3 +103,24 @@ def get_contacts_from_db(params):
             'contacts' : contacts_arr  # 리스트를 통째로 응답으로 -> JSONArray를 응답으로
         }
     }  
+    
+    
+# 키워드를 가지고 검색하는 기능 '경' => 조경진, 박진경 등등 경자가 포함되면 모두 리턴 + 본인이 가진 연락처 중
+def search_contact(params):
+    sql = f"SELECT * FROM contacts WHERE name LIKE '%{params['keyword']}%'"
+    
+    cursor.execute(sql)
+    
+    search_list = cursor.fetchall()
+    
+    for row in search_list :
+        contact : Contacts(row)  # DB에서 추출한 row dict -> 모델 클래스인 Contacts 객체로 변환
+        print(contact)
+    
+    return {
+        'code':200,
+        'message':'search complete',
+        # 'data' : {
+        #     'contacts':''
+        # }
+    }
